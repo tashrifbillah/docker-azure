@@ -10,7 +10,7 @@ pr:
 - master
 
 jobs:
-- job: tbss
+- job: azure-docker-integration
   timeoutInMinutes: 120
 
   pool:
@@ -18,7 +18,7 @@ jobs:
 
   variables:
     dockerId: tbillah
-    imageName: hub.docker.com/tbillah/entry_point
+    imageName: tbillah/entry_point
     imageTag: 0.1
     user: tb571
     wd: /home
@@ -35,15 +35,8 @@ jobs:
   - script: |
         docker build -t $(imageName) -f Dockerfile.entrypoint --build-arg USER=$(user) --build-arg CWD=$(wd) .
         docker run --rm $(imageName) "python -V"
-        # docker push $(imageName)
+        docker push $(imageName)
     displayName: 'Build and test a docker image'
     failOnStderr: true
 
-  
-  - task: Docker@2
-    displayName: push
-    inputs:
-      command: push
-      repository: $(imageName)
-      tags: $(imageTag)
 
