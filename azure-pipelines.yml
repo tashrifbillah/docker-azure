@@ -10,7 +10,7 @@ pr:
 - master
 
 jobs:
-- job: azure-docker-integration
+- job: azure_docker_integration
   timeoutInMinutes: 120
 
   pool:
