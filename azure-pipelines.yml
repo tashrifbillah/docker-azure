@@ -19,7 +19,6 @@ jobs:
   variables:
     dockerId: tbillah
     imageName: tbillah/entry_point
-    imageTag: 0.1
     user: tb571
     wd: /home
 
@@ -46,4 +45,4 @@ jobs:
       command: push
       containerRegistry: dockerHub
       repository: $(imageName)
-      tag: latest
+      tags: 'latest'
