@@ -18,7 +18,7 @@ jobs:
 
   variables:
     dockerId: tbillah
-    imageName: entry_point
+    imageName: tbillah/entry_point
     imageTag: 0.1
     user: tb571
     wd: /home
@@ -35,6 +35,7 @@ jobs:
   - script: |
         docker build -t $(imageName) -f Dockerfile.entrypoint --build-arg USER=$(user) --build-arg CWD=$(wd) .
         docker run --rm $(imageName) "python -V"
+        # docker push $(imageName)
     displayName: 'Build and test a docker image'
     failOnStderr: true
 
@@ -43,6 +44,6 @@ jobs:
     displayName: push
     inputs:
       command: push
-      repository: tbillah/entry_point
+      repository: $(imageName)
       tags: $(imageTag)
 
