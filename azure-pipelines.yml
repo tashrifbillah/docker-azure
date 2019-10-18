@@ -46,3 +46,19 @@ jobs:
       containerRegistry: dockerHub
       repository: $(imageName)
       tags: 'latest'
+      
+   
+  - task: ContainerStructureTest@0
+    displayName: Test container
+    inputs:
+      dockerRegistryServiceConnection: 'dockerHub'
+      repository: 'tbillah/entry_point'
+      tag: 'latest'
+      configFile: '**/structure_test.yml'
+      failTaskOnFailedTests: true
+      
+      
+      
+
+
+
