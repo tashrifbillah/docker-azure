@@ -31,7 +31,18 @@ jobs:
       containerRegistry: dockerHub
 
 
+  - task: CopyFiles@2
+    displayName: 'Copy test configFile'
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)'
+      Contents: '**/structure-test.yaml'
+      TargetFolder: '$(Agent.BuildDirectory)'
+
+
+
   - script: |
+        ls -lad $(Agent.BuildDirectory)
+        ls -la $(Agent.BuildDirectory)
         docker build -t $(imageName) -f Dockerfile.entrypoint --build-arg USER=$(user) --build-arg CWD=$(wd) .
         docker run --rm $(imageName) "python -V"
         # docker push $(imageName)
@@ -48,12 +59,7 @@ jobs:
       tags: 'latest'
       
   
-  - task: CopyFiles@2
-    displayName: 'Copy test configFile'
-    inputs:
-      SourceFolder: '$(Build.SourcesDirectory)'
-      Contents: '**/structure-test.yaml'
-      TargetFolder: '$(Agent.BuildDirectory)'
+
 
    
   - task: ContainerStructureTest@0
