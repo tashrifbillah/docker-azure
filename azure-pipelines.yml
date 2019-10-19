@@ -53,7 +53,7 @@ jobs:
     inputs:
       SourceFolder: '$(Build.SourcesDirectory)'
       Contents: '**/structure-test.yaml'
-      TargetFolder: '$(wd)'
+      TargetFolder: '$(Agent.BuildDirectory)'
 
    
   - task: ContainerStructureTest@0
@@ -62,7 +62,7 @@ jobs:
       dockerRegistryServiceConnection: 'dockerHub'
       repository: 'tbillah/entry_point'
       tag: 'latest'
-      configFile: '$(wd)/structure-test.yaml'
+      configFile: '$(Agent.BuildDirectory)/structure-test.yaml'
       failTaskOnFailedTests: true
       
       
