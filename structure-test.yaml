@@ -1,2 +1,2 @@
-- script: docker run --rm $(imageName) "python -V"
+- script: python -V
   displayName: Test docker container
