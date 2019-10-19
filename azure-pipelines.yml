@@ -52,7 +52,7 @@ jobs:
     displayName: 'Copy test configFile'
     inputs:
       SourceFolder: '$(Build.SourcesDirectory)'
-      Contents: **/structure-test.yaml
+      Contents: '**/structure-test.yaml'
       TargetFolder: '$(wd)'
 
    
