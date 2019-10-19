@@ -26,5 +26,7 @@ RUN echo '#!/bin/bash' > /startup.sh && \
     echo 'if [ $# -gt 0 ]; then /bin/bash -c "source ~/.bashrc && $@"; else /bin/bash; fi' >> /startup.sh && \
     chmod +x /startup.sh
 
+ADD structure-test.yaml $HOME
+
 ENTRYPOINT ["/startup.sh"]
 
