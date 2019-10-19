@@ -47,6 +47,14 @@ jobs:
       repository: $(imageName)
       tags: 'latest'
       
+  
+  - task: CopyFiles@2
+    displayName: 'Copy test configFile'
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)'
+      Contents: **/structure-test.yaml
+      TargetFolder: '$(wd)'
+
    
   - task: ContainerStructureTest@0
     displayName: Test container
@@ -54,7 +62,7 @@ jobs:
       dockerRegistryServiceConnection: 'dockerHub'
       repository: 'tbillah/entry_point'
       tag: 'latest'
-      configFile: '/home/structure-test.yaml'
+      configFile: '$(wd)/structure-test.yaml'
       failTaskOnFailedTests: true
       
       
