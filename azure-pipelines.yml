@@ -54,7 +54,7 @@ jobs:
       dockerRegistryServiceConnection: 'dockerHub'
       repository: 'tbillah/entry_point'
       tag: 'latest'
-      configFile: '/root/structure-test.yaml'
+      configFile: './structure-test.yaml'
       failTaskOnFailedTests: true
       
       
