@@ -44,7 +44,7 @@ jobs:
     inputs:
       SourceFolder: '$(Build.SourcesDirectory)'
       Contents: '**/container-structure-test'
-      TargetFolder: '/usr/local/bin/'
+      TargetFolder: '/usr/bin/'
 
 
 
