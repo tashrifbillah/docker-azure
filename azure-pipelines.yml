@@ -19,7 +19,7 @@ jobs:
   variables:
     dockerId: tbillah
     imageName: tbillah/entry_point
-    user: tb571
+    user: pnlbwh
     wd: /home
 
 
