@@ -1,0 +1,9 @@
+schemaVersion: 2.0.0
+
+commandTests:
+  - name: "Test equality of two integers"
+    command: "/bin/bash"
+    args:
+      - -c
+      - source ~/.bashrc && pytest /home/pnlbwh/equality-test.py
+

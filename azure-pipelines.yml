@@ -38,15 +38,20 @@ jobs:
       Contents: '**/structure-test.yaml'
       TargetFolder: '$(Agent.BuildDirectory)'
 
+  
+  - task: CopyFiles@2
+    displayName: 'Copy container structure test'
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)'
+      Contents: '**/container-structure-test'
+      TargetFolder: '/usr/local/bin/'
+
 
 
   - script: |
-        ls -lad $(Agent.BuildDirectory)
-        ls -la $(Agent.BuildDirectory)
         docker build -t $(imageName) -f Dockerfile.entrypoint --build-arg USER=$(user) --build-arg CWD=$(wd) .
-        docker run --rm $(imageName) "python -V"
         # docker push $(imageName)
-    displayName: 'Build and test a docker image'
+    displayName: 'Build a docker image'
     failOnStderr: true
 
 
@@ -58,21 +63,10 @@ jobs:
       repository: $(imageName)
       tags: 'latest'
       
-  
-
-
-   
-  - task: ContainerStructureTest@0
-    displayName: Test container
-    inputs:
-      dockerRegistryServiceConnection: 'dockerHub'
-      repository: 'tbillah/entry_point'
-      tag: 'latest'
-      configFile: '$(Agent.BuildDirectory)/structure-test.yaml'
-      failTaskOnFailedTests: true
-      
-      
-      
-
+ 
+  - script: |
+        container-structure-test --image $(imageName) --configFile /home/pnlbwh/equality-test.yaml
+    displayName: 'Test the docker image'
+    failOnStderr: true
 
 

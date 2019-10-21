@@ -4,29 +4,30 @@ MAINTAINER Tashrif Billah <tbillah@bwh.harvard.edu>
 
 # set up user and working directory
 ARG USER=pnlbwh
-ENV USER="$USER"
-ARG CWD=/root
-WORKDIR $CWD
-ENV PWD="$CWD"
+RUN useradd --no-user-group --create-home --shell /bin/bash $USER
+WORKDIR /home/$USER
+
+COPY equality-test.py .
+COPY structure-test.yaml .
+COPY startup.sh .
+
+RUN chmod +x startup.sh
 
 # libraries and commands for FSL
 RUN yum -y install wget which file bzip2 && \
     yum clean all && \
-    rm -rf /var/cache/yum && \
 # install python
     echo "Downloading miniconda3 installer" && \
     wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh > /dev/null 2>&1 && \
     /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3/ && \
     rm -f Miniconda3-latest-Linux-x86_64.sh && \
     source miniconda3/bin/activate && \
-    echo "source $PWD/miniconda3/bin/activate" >> ~/.bashrc
+    cp ~/.bashrc . && \
+    echo "source $PWD/miniconda3/bin/activate" >> .bashrc && \
+    pip install pytest numpy
 
 
-RUN echo '#!/bin/bash' > /startup.sh && \
-    echo 'if [ $# -gt 0 ]; then /bin/bash -c "source ~/.bashrc && $@"; else /bin/bash; fi' >> /startup.sh && \
-    chmod +x /startup.sh
+USER $USER
 
-ADD structure-test.yaml $HOME
-
-ENTRYPOINT ["/startup.sh"]
+ENTRYPOINT ["/bin/bash","-c","$HOME/startup.sh"]
 
