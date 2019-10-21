@@ -35,7 +35,7 @@ jobs:
     displayName: 'Copy test configFile'
     inputs:
       SourceFolder: '$(Build.SourcesDirectory)'
-      Contents: '**/structure-test.yaml'
+      Contents: '**/equality-test.yaml'
       TargetFolder: '$(Agent.BuildDirectory)'
 
   
@@ -44,7 +44,7 @@ jobs:
     inputs:
       SourceFolder: '$(Build.SourcesDirectory)'
       Contents: '**/container-structure-test'
-      TargetFolder: '/usr/bin/'
+      TargetFolder: '$(Agent.BuildDirectory)'
 
 
 
@@ -65,7 +65,7 @@ jobs:
       
  
   - script: |
-        container-structure-test --image $(imageName) --configFile /home/pnlbwh/equality-test.yaml
+        $(Agent.BuildDirectory)/container-structure-test --image $(imageName) --configFile $(Agent.BuildDirectory)/equality-test.yaml
     displayName: 'Test the docker image'
     failOnStderr: true
 

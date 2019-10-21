@@ -8,7 +8,6 @@ RUN useradd --no-user-group --create-home --shell /bin/bash $USER
 WORKDIR /home/$USER
 
 COPY equality-test.py .
-COPY structure-test.yaml .
 COPY startup.sh .
 
 RUN chmod +x startup.sh
