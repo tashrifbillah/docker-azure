@@ -65,7 +65,7 @@ jobs:
       
  
   - script: |
-        $(Agent.BuildDirectory)/container-structure-test-linux-amd64 --image $(imageName) --config $(Agent.BuildDirectory)/equality-test.yaml
+        $(Agent.BuildDirectory)/container-structure-test-linux-amd64 test --image $(imageName) --config $(Agent.BuildDirectory)/equality-test.yaml
     displayName: 'Test the docker image'
     failOnStderr: true
 
