@@ -49,7 +49,7 @@ jobs:
 
 
   - script: |
-        docker build -t $(imageName) -f Dockerfile.entrypoint --build-arg USER=$(user) --build-arg CWD=$(wd) .
+        docker build -t $(imageName) -f Dockerfile.entrypoint --build-arg USER=$(user) .
         # docker push $(imageName)
     displayName: 'Build a docker image'
     failOnStderr: true
@@ -65,8 +65,7 @@ jobs:
       
  
   - script: |
-        ls -la $(Agent.BuildDirectory)
-        $(Agent.BuildDirectory)/container-structure-test-linux-amd64 (Agent.BuildDirectory)/equality-test.yaml
+        $(Agent.BuildDirectory)/container-structure-test-linux-amd64 --image $(imageName) --config $(Agent.BuildDirectory)/equality-test.yaml
     displayName: 'Test the docker image'
     failOnStderr: true
 
