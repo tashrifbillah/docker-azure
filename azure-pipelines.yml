@@ -44,7 +44,7 @@ jobs:
     inputs:
       SourceFolder: '$(Build.SourcesDirectory)'
       Contents: '**/container-structure-test-linux-amd64'
-      TargetFolder: '$(Agent.BuildDirectory)'
+      TargetFolder: '/usr/bin/'
 
 
 
@@ -66,7 +66,8 @@ jobs:
  
   - script: |
         ls -la $(Agent.BuildDirectory)
-        $(Agent.BuildDirectory)/container-structure-test-linux-amd64 (Agent.BuildDirectory)/equality-test.yaml
+        echo $PATH
+        container-structure-test-linux-amd64 $(Agent.BuildDirectory)/equality-test.yaml
     displayName: 'Test the docker image'
     failOnStderr: true
 
