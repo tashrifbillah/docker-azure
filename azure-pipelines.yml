@@ -64,9 +64,13 @@ jobs:
       tags: 'latest'
       
  
-  - script: |
-        $(Agent.BuildDirectory)/container-structure-test-linux-amd64 test --image $(imageName) --config $(Agent.BuildDirectory)/equality-test.yaml
-    displayName: 'Test the docker image'
-    failOnStderr: true
+  - task: ContainerStructureTest@0
+    displayName: Test container
+    inputs:
+      dockerRegistryServiceConnection: 'dockerHub'
+      repository: 'tbillah/entry_point'
+      tag: 'latest'
+      configFile: '$(Agent.BuildDirectory)/equality-test.yaml'
+      failTaskOnFailedTests: true
 
 
