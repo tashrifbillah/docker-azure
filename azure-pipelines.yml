@@ -49,27 +49,17 @@ jobs:
 
 
   - script: |
-        docker build -t $(imageName) -f Dockerfile.entrypoint --build-arg USER=$(user) .
-        # docker push $(imageName)
+        docker build -t $(imageName):runTest -f Dockerfile.entrypoint --build-arg USER=$(user) .
     displayName: 'Build a docker image'
     failOnStderr: true
 
-
-  - task: Docker@2
-    displayName: Push image to Docker Hub
-    inputs:
-      command: push
-      containerRegistry: dockerHub
-      repository: $(imageName)
-      tags: 'latest'
-      
  
   - task: ContainerStructureTest@0
     displayName: Test container
     inputs:
       dockerRegistryServiceConnection: 'dockerHub'
       repository: 'tbillah/entry_point'
-      tag: 'latest'
+      tag: 'runTest'
       configFile: '$(Agent.BuildDirectory)/equality-test.yaml'
       failTaskOnFailedTests: true
 
