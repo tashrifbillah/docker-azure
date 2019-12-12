@@ -38,15 +38,6 @@ jobs:
       Contents: '**/equality-test.yaml'
       TargetFolder: '$(Agent.BuildDirectory)'
 
-  
-  - task: CopyFiles@2
-    displayName: 'Copy container structure test'
-    inputs:
-      SourceFolder: '$(Build.SourcesDirectory)'
-      Contents: '**/container-structure-test-linux-amd64'
-      TargetFolder: '$(Agent.BuildDirectory)'
-
-
 
   - script: |
         docker build -t $(imageName) -f Dockerfile.entrypoint --build-arg USER=$(user) .
