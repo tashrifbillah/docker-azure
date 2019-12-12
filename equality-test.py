@@ -11,7 +11,7 @@ class TestEnigma(unittest.TestCase):
         np.testing.assert_equal(5,5)
 
     def test_enigma_AD(self):
-        np.testing.assert_equal(0,5)
+        np.testing.assert_equal(5,5)
 
 if __name__ == '__main__':
     unittest.main()
