@@ -49,7 +49,7 @@ jobs:
 
 
   - script: |
-        docker build -t $(imageName):runTest -f Dockerfile.entrypoint --build-arg USER=$(user) .
+        docker build -t $(imageName) -f Dockerfile.entrypoint --build-arg USER=$(user) .
     displayName: 'Build a docker image'
     failOnStderr: true
 
@@ -59,8 +59,20 @@ jobs:
     inputs:
       dockerRegistryServiceConnection: 'dockerHub'
       repository: 'tbillah/entry_point'
-      tag: 'runTest'
+      tag: 'latest'
       configFile: '$(Agent.BuildDirectory)/equality-test.yaml'
       failTaskOnFailedTests: true
 
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
+    inputs:
+      testResultsFormat: 'VSTest'
+      testResultsFiles: '**/TEST-*.xml'
 
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish build artifact'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
+    condition: succeededOrFailed()
