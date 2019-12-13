@@ -5,5 +5,5 @@ commandTests:
     command: "/bin/bash"
     args:
       - -c
-      - source ~/.bashrc && pytest /home/pnlbwh/equality-test.py
+      - source ~/.bashrc && pytest -v /home/pnlbwh/equality-test.py
 
