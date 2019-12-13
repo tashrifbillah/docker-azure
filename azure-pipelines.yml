@@ -21,6 +21,7 @@ jobs:
     imageName: tbillah/entry_point
     user: pnlbwh
     wd: /home
+    tag: runTest
 
 
   steps:
@@ -38,13 +39,22 @@ jobs:
       Contents: '**/equality-test.yaml'
       TargetFolder: '$(Agent.BuildDirectory)'
 
- 
+  - task: Docker@2
+    displayName: 'Build and push docker image'
+    inputs:
+      containerRegistry: 'dockerHub'
+      repository: $(imageName)
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile.entrypoint'
+      tags: $(tag)
+
+
   - task: ContainerStructureTest@0
     displayName: Test container
     inputs:
       dockerRegistryServiceConnection: 'dockerHub'
       repository: 'tbillah/entry_point'
-      tag: 'latest'
+      tag: $(tag)
       configFile: '$(Agent.BuildDirectory)/equality-test.yaml'
       failTaskOnFailedTests: true
 
